@@ -1,0 +1,11 @@
+
+// 2x pic
+@function px2rem($px){
+    @return ($px/10)/2 + rem;
+}
+
+// 1x pic
+@function px1rem($px) {
+    @return ($px/10) + rem;
+}
+

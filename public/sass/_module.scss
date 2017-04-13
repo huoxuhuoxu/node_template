@@ -1,0 +1,285 @@
+﻿/* initial */
+@mixin initial(){
+    * {
+        box-sizing: border-box;
+    }
+    li {
+        list-style: none;
+    }
+    a,a:link,a:hover,a:active,a:visited {
+        text-decoration: none;
+    }
+    a:focus,button:focus {
+        outline: none;
+    }
+}
+
+@mixin iphone_initial(){
+    * {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+    }
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px white inset;
+        outline:none;
+        box-shadow:#fff 0px 0px 0px ;
+    }
+    input[type="text"],
+    input[type="button"], 
+    input[type="submit"], 
+    input[type="reset"],
+    textarea {
+        -webkit-appearance: none;
+    }
+}
+
+@mixin common_body(){
+    html {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+    }
+    body {
+        @extend html;
+        position: relative;
+        background: #fff;
+    }
+}
+
+/* base */
+@mixin clearfix(){
+    clear: both;
+    overflow: hidden;
+    *zoom: 1;
+}
+@mixin clearboth(){
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+}
+
+@mixin border-radius($radius:4px){
+    border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+}
+@mixin text-shadow($shadow){
+    text-shadow: $shadow;
+}
+@mixin box-shadow($shadow){
+    box-shadow: $shadow;
+}
+
+@mixin absolute($top:0px,$left:0px){
+    position: absolute;
+    top: $top;
+    left: $left;
+}
+@mixin absolute2(){
+    position: absolute;
+}
+@mixin relative($top:0px,$left:0px){
+    position: relative;
+    top: $top;
+    left: $left;
+}
+@mixin fixed($top:0px,$left:0px){
+    position: fixed;
+    top: $top;
+    left: $left;
+}
+
+@mixin transition($transi){
+    transition: $transi;
+    -moz-transition: $transi;
+    -webkit-transition: $transi;
+    -ms-transition: $transi;
+}
+@mixin transform($transf){
+    transform: $transf;
+    -webkit-transform: $transf;
+    -moz-transform: $transf;
+    -ms-transform: $transf;
+}
+@mixin animation($animation, $mode: none){
+    animation: $animation;
+    -webkit-animation: $animation;
+    -moz-animation: $animation;
+    -ms-animation: $animation;
+}
+@mixin animation-fm($mode: forwards) {
+    animation-fill-mode: $mode;
+    -webkit-animation-fill-mode: $mode;
+    -moz-animation-fill-mode: $mode;
+    -ms-animation-fill-mode: $mode;
+}
+
+@mixin perspective($perspective:1000px){
+    perspective: $perspective;
+    -webkit-perspective: $perspective;
+    -moz-perspective: $perspective;
+    -ms-perspective: $perspective;
+}
+@mixin preserve-3d($preserve:preserve-3d){
+    transform-style: $preserve;
+    -webkit-transform-style: $preserve;
+    -moz-transform-style: $preserve;
+    -ms-transform-style: $preserve;
+}
+@mixin transform-origin($origin: center){
+    transform-origin: $origin;
+    -webkit-transform-origin: $origin;
+    -moz-transform-origin: $origin;
+    -ms-transform-origin: $origin;
+}
+
+
+@mixin setBg($url){
+    background: url($url) center no-repeat;
+    background-size: 100% 100%;
+}
+
+/* ------------- flexbox ------------- */
+@mixin setFlex($flex: flex){
+    display: $flex;
+    display: -webkit-$flex;
+}
+@mixin setFlexXYCenter($x: center, $y: center){
+    justify-content: $x;
+    -webkit-justify-content: $x;
+    align-items: $y;
+    -webkit-align-items: $y;
+}
+@mixin setFlexDirection($d: column){
+    flex-direction: $d;
+    -webkit-flex-direction: $d;
+}
+@mixin setFlexJustify($d: center){
+    justify-conent: $d;
+    -webkit-justify-content: $d;
+}
+
+
+/* media queries */
+@mixin MQ($size){
+    @if $size == xs{
+        @media only screen and (max-width: $sm){
+            @content;
+        }
+    }@else if $size == sm{
+        @media only screen and (min-width: $sm+1) and (max-width: $md){
+            @content;
+        }
+    }@else if $size == md{
+        @media only screen and (min-width: $md+1) and (max-width: $lg){
+            @content;
+        }
+    }@else if $size == lg{
+        @media only screen and (min-width: $lg+1){
+            @content;
+        } 
+    }
+}
+@mixin MQ2($size){
+    @media only screen and (min-width: $size){
+        @content;
+    }
+}
+@mixin MQ3($size){
+    @media only screen and (max-width: $size){
+        @content;
+    }
+}
+
+@mixin MQ4($size){
+    @media only screen and (max-height: $size){
+        @content;
+    }
+}
+
+
+/* module */
+@mixin button-links($button-base:darken($color11,10%),$button-hover:darken($color11,15%)){
+    border: 1px solid darken($color11,16%);
+    padding: .3em .6em;
+    margin-left: .7em;
+    @include border-radius(8px);
+    @include text-shadow(0 1px 2px $color11);
+    color: lignten($color10,50%);
+    background-color: $button-base;
+    &:hover {
+        background-color: $button-hover;
+    }
+}
+@mixin button-links2($button-base:darken($color11,10%),$button-hover:darken($color11,15%)){
+    border: 1px solid darken($color11,16%);
+    padding: .3em 1.2em;
+    margin-left: .7em;
+    @include border-radius(14px);
+    @include text-shadow(0 1px 2px $color11);
+    color: lignten($color10,50%);
+    background-color: $button-base;
+    &:hover {
+        background-color: $button-hover;
+    }
+}
+@mixin button-edit($height:20px,$width:40px,$color:orange){
+    height: $height;
+    width: $width;
+    text-align: center;
+    font-size: 12px;
+    line-height: $height;
+    background: $color;
+    color: #fff;
+    @include box-shadow($color 0px 0px 4px);
+    &:hover {
+        background: lighten($color,10%);
+    }
+}
+// 无默认值的参数 必须 先写
+@mixin button-gray($radius:0px,$color_other:$color11){
+    border: 1px darken($color11,40%) solid;
+    padding: 5px 12px;
+    border-radius: $radius;
+    color: #000;
+    background: darken($color_other,5%);
+}
+
+/* linear-radial only color transition */
+@mixin linear-gradient($type,$co1,$co2){
+    background: linear-gradient($type,$co1,$co2);
+    background: -webkit-linear-gradient($type,$co1,$co2);
+    background: -moz-linear-gradient($type,$co1,$co2);
+    background: -ms-linear-gradient($type,$co1,$co2);
+}
+
+@mixin radial-gradient($type,$size,$co1,$co2){
+    background: radial-gradient($type,$size,$co1,$co2);
+    background: -webkit-radial-gradient($type,$size,$co1,$co2);
+    background: -moz-radial-gradient($type,$size,$co1,$co2);
+    background: -ms-radial-gradient($type,$size,$co1,$co2);
+}
+
+
+
+
+/* other-special */
+@mixin linear-gradient2($type,$co1,$co2,$co3){
+    background: linear-gradient($type,$co1,$co2,$co3);
+    background: -webkit-linear-gradient($type,$co1,$co2,$co3);
+    background: -moz-linear-gradient($type,$co1,$co2,$co3);
+    background: -ms-linear-gradient($type,$co1,$co2,$co3);
+}
+@mixin linear-gradient3($type,$co1,$co2,$co3,$co4){
+    background: linear-gradient($type,$co1,$co2,$co3,$co4);
+    background: -webkit-linear-gradient($type,$co1,$co2,$co3,$co4);
+    background: -moz-linear-gradient($type,$co1,$co2,$co3,$co4);
+    background: -ms-linear-gradient($type,$co1,$co2,$co3,$co4);
+}
+
+
+
+
