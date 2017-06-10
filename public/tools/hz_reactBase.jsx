@@ -1,6 +1,3 @@
-// 基础函数支持,底库
-
-
 // 针对 redux->applyMiddleware 中间件处理异步事件的重写
 /*
 	@todo 
@@ -8,6 +5,10 @@
 		默认FSA不支持动作内有函数调用,但是由于目前dispatch为重写后的,
 		所以NEXT才是原来的dispatch,NEXT调用时action已经是对象字面量了,
 		符合FSA规范.
+
+	@todo N久之后
+		按照middleware将原本dispatch的重写改写成规范的中间件,...
+		现在 异步动作失败,并且没有错误处理机制,反馈 async = 'fail'
 */
 /*
 	action 例:
@@ -22,29 +23,31 @@
 	})
 */
 
-const STORE_DISPATCH = (STORE) => {
-	const NEXT = STORE.dispatch;
-	return async function(action){
-		if(action.async && (action.async instanceof Promise)){
-			action.before ? NEXT(action.before()) : null;
-			await new Promise(function(resolve){
-				action.async.then(function(data){
-					action = Object.assign({}, action, {'async': data});
-					resolve(action);
-				}, function(err){
-					action = action.fail ? Object.assign({}, action, action.fail()) : Object.assign({}, action);
-					resolve(action);
-				}).catch(function(err){
-					throw new Error("Error:" + err.toString());
-				});
+
+const STORE_DISPATCH = store => next => async (action) => {
+	let { async, before, fail } = action;
+	delete action['fail'];
+	delete action['before'];
+	delete action['async'];
+	if(async && (async instanceof Promise)){
+		before ? next(before()) : null;
+		await new Promise(resolve => {
+			async.then(data =>{
+				action = { ...action, async: data};
+				resolve(action);
+			}, err => {
+				action = fail ? { ...action, ...fail() } : { ...action, async: 'fail' };
+				resolve(action);
+			}).catch(err => {
+				throw new Error("Error:" + err.toString());
 			});
-		}
-		NEXT(action);
-	}
-}
+		});
+	};
+	next(action);
+};
 
 
-export var writeOverDispatch = STORE_DISPATCH;
 
+export let writeOverDispatch = STORE_DISPATCH;
 
 
