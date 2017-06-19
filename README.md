@@ -37,7 +37,7 @@ Version 1.0.0
 
 #### private
 	interface: 接口文件
-	pdo: 数据库文件
+	orm: 数据库文件
 		classMysqlHandler.js: 连接mysql
 		awaitQuerySql.js: async/await形式执行sql语句
 
