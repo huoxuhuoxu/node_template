@@ -4,15 +4,15 @@
  * Module dependencies.
  */
 
+const CONFIG = require('../config');
 var app = require('../app');
-var debug = require('debug')('uatmagician:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(CONFIG.port);
 app.set('port', port);
 
 /**
@@ -88,5 +88,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }

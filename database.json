@@ -1,0 +1,12 @@
+{
+    "default": "prod",
+    "prod": {
+        "driver": "mysql",
+        "database": {"ENV": "DB_DATABASE"},
+        "user": {"ENV": "DB_USERNAME"},
+        "password": {"ENV": "DB_PASSWORD"}
+    }
+}
+
+
+

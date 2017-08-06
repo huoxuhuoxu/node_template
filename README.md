@@ -1,12 +1,18 @@
 Version 1.0.0
-### nodeJs7.7.8基于Express模块,自定义框架
+### nodeJs7.7.8基于Express模块,初始化项目结构
 	研发环境,使用模块热更新，生产环境配合pm2使用
 
-#### config.js文件
+#### .env
+	环境变量生成 基于 dotenv模块
+
+#### config.js
 	1.database: 数据库连接配置
 	2.port: 主服务进程端口配置
+
+#### database.json
+	db-migrate 数据库迁移配置
 	
-#### routes.js文件
+#### routes.js
 	文件启用了模块热更新
 	1.ROUTER常量: 定义页面路由
 		const ROUTER = [
@@ -24,7 +30,7 @@ Version 1.0.0
 			}
 		];
 
-#### app.js文件
+#### app.js
 	nodeJs主程序文件
 	负责启用各中间件,静态资源代理,路由挂载,404,500等处理
 
@@ -41,32 +47,23 @@ Version 1.0.0
 		classMysqlHandler.js: 连接mysql
 		awaitQuerySql.js: async/await形式执行sql语句
 
-#### public静态资源文件夹
-	css/js/images/fonts/source: 常规
-	sass: sass基于compass框架
-		_function: 函数
-		_module: 混合宏
-		_placeholder: 预定义
-		_variable: 变量定义
-		_predefine: 常用class定义
-	tools: 自定义工具
-		hz_frontBase: 基础方法		
-		hz_myTools:	功能方法
-		hz_reactBase: react/redux方法
-		hz_touch: 触摸方法
-	tpls: 存放html代码片段
-	dist: 打包后的文件目录
+#### public
+	静态资源文件夹
 	
 #### routes
 	存放路由处理文件与routes.js中ROUTER定义的路由有关
 
-#### scripts脚本文件夹
-	initial_database.js: 自动建表脚本
+#### scripts
+	initial_project.sh: 项目环境初始化
+		权限 chmod u+x ./scripts/initial_project.sh
+		执行 ./scripts/initial_project.sh
 	
 #### services其他服务文件夹
 	webrtc.js: WebRTC服务
 	ws.js: websocket服务
 	wss.js: 基于https的websocket服务
+	sse.js: 数据推送服务
+	ws_socketIO.js: socket.io模块的ws服务
 
 #### tools工具文件夹
 	updateModulePro.js: 热更新模块

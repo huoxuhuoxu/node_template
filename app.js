@@ -4,8 +4,8 @@ var fs = require('fs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
-
 var router = require('./routes');
 
 var CleanCache = require('./tools/updateModulePro').CleanCache;
@@ -31,17 +31,27 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(session({
+  secret: 'recommand 128 bytes random string',
+  cookie: { maxAge: 60 * 1000 }
+}));
+
 // 静态资源代理,之后交给nginx
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 屏蔽favicon.ico
+app.use(function(req, res, next){
+  if(req.url === '/favicon.ico'){
+    res.end();
+    return ;
+  };
+  next();
+});
 // 正常路由处理
 app.use(function(req, res, next){
-  if(req.url == '/favicon.ico'){
-    res.end();
-  }else{
-    router(req, res, next); 
-  };
+    router(req, res, next);   
 });
+
 // 监听总路由/接口文件 发生变化,清除缓存重载模块
 fs.watch(require.resolve('./routes'), function(){
   CleanCache(require.resolve('./routes'));
